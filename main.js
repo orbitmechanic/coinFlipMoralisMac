@@ -28,6 +28,11 @@ async function flip(side) {
         .send({value:amount, from: ethereum.selectedAddress})
         .on('receipt', function(receipt){
             console.log(receipt);
+            if (receipt.events.bet.returnValues.win){
+                alert("Win!");
+            } else {
+                alert("Loss.");
+            }
         });
 }
 
