@@ -14,13 +14,20 @@ async function login() {
         document.getElementById("login_button").style.display = "none";
         document.getElementById("game").style.display = "block";
 
-        let results = await Moralis.Cloud.run("test",{});
-        console.log(results);
+        let winners = await Moralis.Cloud.run("biggestWinners",{});
+        console.log(winners);
+        let losers = await Moralis.Cloud.run("biggestLosers",{});
+        console.log(losers);
 
     } catch (error) {
         console.log(error);
     }
  
+}
+
+async function logout(){
+    await Moralis.User.logOut();
+    alert("User logged out.");
 }
 
 async function flip(side) {
@@ -42,5 +49,6 @@ async function flip(side) {
 }
 
 document.getElementById("login_button").onclick = login;
+document.getElementById("logout_button").onclick = logout;
 document.getElementById("headsbutton").onclick = function(){flip("heads")};
 document.getElementById("tailsbutton").onclick = function(){flip("tails")};
