@@ -13,9 +13,14 @@ async function login() {
         }
         document.getElementById("login_button").style.display = "none";
         document.getElementById("game").style.display = "block";
+
+        let results = await Moralis.Cloud.run("test",{});
+        console.log(results);
+
     } catch (error) {
         console.log(error);
     }
+ 
 }
 
 async function flip(side) {
