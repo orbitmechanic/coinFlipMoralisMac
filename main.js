@@ -21,6 +21,14 @@ async function login() {
 async function flip(side) {
     let amount = document.getElementById("amount").value;
     alert('Side: ' + side + " Amount: " + amount);
+    window.web3 = await Moralis.Web3.enable();
+    let contractAddress = "0xf271dF427d16D3f7910A8b2311E7c2f4702aF8C4";
+    let contractInstance = new web3.eth.Contract(window.abi, contractAddress);
+    contractInstance.methods.flip(side == "heads" ? 0:1)
+        .send({value:amount, from: ethereum.selectedAddress})
+        .on('receipt', function(receipt){
+            console.log(receipt);
+        });
 }
 
 document.getElementById("login_button").onclick = login;
