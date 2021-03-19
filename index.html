@@ -19,6 +19,7 @@
         <h1 class="display-4">Welcome</h1>
       </div>
     </div>
+
     <div class="container">
         <button id="login_button">Sign in with MetaMask</button>
         <div id="game" style="display:none;">
@@ -27,10 +28,49 @@
           <button id="tailsbutton">Play Tails</button>
         </div>
     </div>
-    <div>
+    <br><br>
+    <div class="container">
+      <div class='row' id="statistics">
+        <div class="col-md-6">
+          <h3>Top Winners</h3>
+          <table class="table" id="top_winners">
+            <thead>
+              <tr>
+                <th scope="col">Address</th>
+                <th scope="col">Total wei won</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h3>Top Loosers</h3>
+          <table class="table" id="top_losers">
+            <thead>
+              <tr>
+                <th scope="col">Address</th>
+                <th scope="col">Total wei lost</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h3>Biggest Bets</h3>
+          <table class="table" id="top_bets">
+            <thead>
+              <tr>
+                <th scope="col">Address</th>
+                <th scope="col">Bet size (wei)</th>
+                <th scope="col">Win|Loss</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <div class="container">
       <button id="logout_button">Sign out from MetaMask</button>
     </div>
-
     <script type="text/javascript" src="./main.js"></script>
   </body>
 </html>

@@ -1,6 +1,16 @@
 Moralis.initialize("IYOarGZPltuYpMm414LrEACUjPInzFcKCWDR0ovS"); // Application id from moralis.io
 Moralis.serverURL = "https://xzwygifofpgw.moralis.io:2053/server"; //Server url from moralis.io
 
+function addRowToTable(tableId, data){
+    let tableRow = document.createElement('tr');
+    data.forEach(element => {
+        let newColumn = document.createElement('td');
+        newColumn.innerHTML = element;
+        tableRow.appendChild(newColumn);
+    });
+    document.getElementById(tableId).appendChild(tableRow);
+}
+
 async function login() {
     try {
         user = await Moralis.User.current();
@@ -16,8 +26,22 @@ async function login() {
 
         let winners = await Moralis.Cloud.run("biggestWinners",{});
         console.log(winners);
+        winners.forEach( (row) => {
+            addRowToTable('top_winners',[row.objectId, row.total_sum]);
+        })
+        
         let losers = await Moralis.Cloud.run("biggestLosers",{});
         console.log(losers);
+        losers.forEach( (row) => {
+            addRowToTable('top_losers',[row.objectId, row.total_sum]);
+        })
+
+        addRowToTable('top_losers',losers);
+        let allBets = await Moralis.Cloud.run("biggestBets",{});
+        console.log(allBets);
+        allBets.forEach( (row) => {
+            addRowToTable('top_bets',[row.user,row.bet,row.win]);
+        })
 
     } catch (error) {
         console.log(error);

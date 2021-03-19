@@ -1,0 +1,74 @@
+Moralis.Cloud.define("biggestWinners", async function(request) {
+  const query = new Parse.Query("flips");
+  // constrain querry
+  query.equalTo("win", true); 
+  
+  const pipeline = [
+    { 
+      group: {
+      	objectId: "\$user",
+      	total_sum: { \$sum: { \$toInt: "\$bet" }}
+    	}
+    },
+    {
+      sort: {bet: -1},
+    },
+    { limit: 10}
+    ]
+  
+  // execute query
+  const result = await query.aggregate(pipeline, {useMasterKey: true}); 
+  
+  // report
+  return result;
+});
+
+Moralis.Cloud.define("biggestLosers", async function(request) {
+  const query = new Parse.Query("flips");
+  // constrain querry
+  query.equalTo("win", false); 
+  
+  const pipeline = [
+    { 
+      group: {
+      	objectId: "\$user",
+      	total_sum: { \$sum: { \$toInt: "\$bet" }}
+    	}
+    },
+    {
+      sort: {bet: -1},
+    },
+    { limit: 10}
+    ]
+  
+  // execute query
+  const result = await query.aggregate(pipeline, {useMasterKey: true}); 
+  
+  // report
+  return result;
+});
+
+Moralis.Cloud.define("biggestBets", async function(request) {
+  const query = new Parse.Query("flips");
+  // constrain querry
+  query.select("user", "bet", "win");
+  const pipeline = [
+    { 
+      project: {
+      	bet: { \$toInt: "\$bet" },
+      	win: 1,
+        user: 1
+    	}
+    },
+    {
+      sort: {bet: -1},
+    },
+    { limit: 10}
+    ]
+  
+  // execute query
+  const result = await query.aggregate(pipeline, {useMasterKey: true}); 
+  
+  // report
+  return result;
+});
