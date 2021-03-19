@@ -3,9 +3,14 @@ Moralis.serverURL = "https://xzwygifofpgw.moralis.io:2053/server"; //Server url 
 
 async function login() {
     try {
-        user = await Moralis.Web3.authenticate();
-        console.log(user);
-        alert("User logged in");
+        user = await Moralis.User.current();
+        if(!user){
+            user = await Moralis.Web3.authenticate();
+            alert("New user logged in");
+            console.log(user);
+        } else {
+            alert("Same user re-logged in.");
+        }
         document.getElementById("login_button").style.display = "none";
         document.getElementById("game").style.display = "block";
     } catch (error) {
